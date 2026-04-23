@@ -20,6 +20,9 @@ export const metadata = {
     "Angular",
     "React",
   ],
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%237c3aed'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='13' fill='white' letter-spacing='-0.5'>RM</text></svg>",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -28,7 +31,7 @@ export default function RootLayout({ children }) {
       <body className={poppins.variable}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem={false}
         >
           {children}
