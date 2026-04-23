@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Palette, Database, Wrench } from "lucide-react";
+import { skillsElements } from "@/components/ui/FloatingElements";
 
 const skillGroups = [
   {
@@ -57,9 +58,11 @@ export default function Skills() {
   const [activeId, setActiveId] = useState(null);
 
   return (
-    <section id="skills">
-      <div className="section-container">
-        {/* Section Header */}
+    <section id="skills" className="relative overflow-hidden">
+      {/* Floating patches */}
+      {skillsElements}
+
+      <div className="section-container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +83,6 @@ export default function Skills() {
           </h2>
         </motion.div>
 
-        {/* Skill Cards */}
         <div className="flex flex-col gap-6">
           {skillGroups.map((group, index) => {
             const Icon = group.icon;
@@ -94,7 +96,6 @@ export default function Skills() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                // On mobile always full width, on sm+ zigzag
                 className={`flex ${isRight ? "justify-end" : "justify-start"}`}
               >
                 <div
@@ -102,40 +103,24 @@ export default function Skills() {
                   onMouseLeave={() => setActiveId(null)}
                   onFocus={() => setActiveId(group.id)}
                   onBlur={() => setActiveId(null)}
-                  // Touch support for mobile
                   onTouchStart={() => setActiveId(group.id)}
                   onTouchEnd={() => setTimeout(() => setActiveId(null), 800)}
                   className={`
                     card cursor-default relative overflow-hidden
                     w-full sm:w-3/4 lg:w-2/3
                     transition-all duration-500
-                    ${
-                      isActive
-                        ? "border-purple-primary/40 dark:border-purple-light/40 shadow-lg shadow-purple-primary/10"
-                        : ""
-                    }
+                    ${isActive ? "border-purple-primary/40 dark:border-purple-light/40 shadow-lg shadow-purple-primary/10" : ""}
                   `}
                 >
-                  {/* Gradient top line on hover */}
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
                     className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-primary/60 dark:via-purple-light/60 to-transparent"
                   />
 
-                  {/* Top Row */}
                   <div className="flex items-center gap-3 mb-5">
                     <div
-                      className={`
-                      w-10 h-10 rounded-xl flex-shrink-0
-                      flex items-center justify-center
-                      transition-all duration-300
-                      ${
-                        isActive
-                          ? "bg-purple-primary dark:bg-purple-light"
-                          : "bg-lavender-100 dark:bg-dark-border"
-                      }
-                    `}
+                      className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all duration-300 ${isActive ? "bg-purple-primary dark:bg-purple-light" : "bg-lavender-100 dark:bg-dark-border"}`}
                     >
                       <Icon
                         className={`w-5 h-5 transition-colors duration-300 ${isActive ? "text-white" : "text-purple-primary dark:text-purple-light"}`}
@@ -153,7 +138,6 @@ export default function Skills() {
                     </div>
                   </div>
 
-                  {/* Skills */}
                   <div className="flex flex-wrap gap-2">
                     {group.skills.map((skill, i) => (
                       <motion.span
@@ -167,15 +151,7 @@ export default function Skills() {
                           duration: 0.3,
                           delay: isActive ? i * 0.04 : 0,
                         }}
-                        className={`
-                          text-xs font-medium px-3 py-1.5 rounded-full border
-                          transition-all duration-300
-                          ${
-                            isActive
-                              ? "bg-purple-primary/10 dark:bg-purple-light/10 text-purple-primary dark:text-purple-light border-purple-primary/20 dark:border-purple-light/20"
-                              : "bg-lavender-100/40 dark:bg-dark-border/40 text-gray-500 dark:text-lavender-300 border-lavender-200/40 dark:border-dark-border/40"
-                          }
-                        `}
+                        className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-300 ${isActive ? "bg-purple-primary/10 dark:bg-purple-light/10 text-purple-primary dark:text-purple-light border-purple-primary/20 dark:border-purple-light/20" : "bg-lavender-100/40 dark:bg-dark-border/40 text-gray-500 dark:text-lavender-300 border-lavender-200/40 dark:border-dark-border/40"}`}
                       >
                         {skill}
                       </motion.span>
@@ -187,7 +163,6 @@ export default function Skills() {
           })}
         </div>
 
-        {/* Bottom note */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

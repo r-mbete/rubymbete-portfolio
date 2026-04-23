@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { experienceElements } from "@/components/ui/FloatingElements";
 
 const experiences = [
   {
@@ -55,8 +56,11 @@ const education = [
 
 export default function Experience() {
   return (
-    <section id="experience">
-      <div className="section-container">
+    <section id="experience" className="relative overflow-hidden">
+      {/* Floating patches */}
+      {experienceElements}
+
+      <div className="section-container relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -89,19 +93,16 @@ export default function Experience() {
               transition={{ duration: 0.5, delay: index * 0.15 }}
               className="card group relative overflow-hidden"
             >
-              {/* Subtle glow accent on current role */}
               {exp.current && (
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-primary/50 dark:via-purple-light/50 to-transparent" />
               )}
 
-              {/* Top Row */}
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-lavender-100 group-hover:text-purple-primary dark:group-hover:text-purple-light transition-colors duration-300">
                       {exp.company}
                     </h3>
-                    {/* Current role indicator */}
                     {exp.current && (
                       <span className="flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-green-400/10 text-green-500 dark:text-green-400 border border-green-400/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
@@ -118,12 +119,10 @@ export default function Experience() {
                 </span>
               </div>
 
-              {/* Description */}
               <p className="text-sm text-gray-500 dark:text-lavender-300 leading-relaxed mb-4">
                 {exp.description}
               </p>
 
-              {/* Bullets */}
               <ul className="space-y-2 mb-4">
                 {exp.bullets.map((bullet, i) => (
                   <li
@@ -136,7 +135,6 @@ export default function Experience() {
                 ))}
               </ul>
 
-              {/* Tech Badges */}
               <div className="flex flex-wrap gap-2 pt-3 border-t border-lavender-200/40 dark:border-dark-border/40">
                 {exp.tech.map((t, i) => (
                   <span
@@ -173,9 +171,7 @@ export default function Experience() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card group relative overflow-hidden"
               >
-                {/* Top gradient line */}
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-primary/30 dark:via-purple-light/30 to-transparent" />
-
                 <span className="text-xs font-medium px-3 py-1 rounded-full inline-block mb-3 bg-lavender-200/50 dark:bg-dark-border text-gray-500 dark:text-lavender-300 border border-lavender-200 dark:border-dark-border">
                   {edu.period}
                 </span>
