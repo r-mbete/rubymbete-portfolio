@@ -1,7 +1,7 @@
 # Ruby Mbete — Portfolio
 
 Personal portfolio built with Next.js, Tailwind CSS, and Framer Motion.
-Live at: [rubymbete.vercel.app](https://rubymbete.vercel.app)
+Live at: [rubymbete.vercel.app](https://rubymbete-portfolio.vercel.app/)
 
 ## Stack
 
