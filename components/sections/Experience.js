@@ -101,9 +101,7 @@ export default function Experience() {
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-lavender-100 group-hover:text-purple-primary dark:group-hover:text-purple-light transition-colors duration-300">
-                      {exp.company}git add .
-git commit -m "feat: add RM favicon and set dark mode as default"
-git push origin main
+                      {exp.company}
                     </h3>
                   </div>
                   <p className="text-sm font-semibold text-purple-primary dark:text-purple-light">
