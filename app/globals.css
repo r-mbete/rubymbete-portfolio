@@ -1,26 +1,268 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-family-poppins: "Poppins", sans-serif;
+
+  --color-lavender-50: #f5f3ff;
+  --color-lavender-100: #e6e6fa;
+  --color-lavender-200: #d4d0f7;
+  --color-lavender-300: #b8b2f0;
+  --color-lavender-400: #9b8fe8;
+  --color-lavender-500: #7c6dd8;
+  --color-lavender-600: #6450c4;
+  --color-lavender-700: #5340a8;
+  --color-lavender-800: #453589;
+  --color-lavender-900: #3a2d6e;
+
+  --color-purple-primary: #7b2fbe;
+  --color-purple-light: #9b5fde;
+  --color-purple-dark: #5a1f8e;
+
+  --color-dark-bg: #0f0f1a;
+  --color-dark-card: #1a1a2e;
+  --color-dark-border: #2a2a3e;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-family-poppins);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* LIGHT MODE — whole page lavender */
+  body {
+    background-color: #e6e6fa;
+    color: #111827;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+  }
+
+  /* DARK MODE — whole page dark */
+  html.dark body {
+    background-color: #0f0f1a;
+    color: #e6e6fa;
+  }
+
+  /* Remove ALL section borders and make backgrounds transparent */
+  section {
+    border: none !important;
+    background-color: transparent !important;
+  }
+
+  html.dark section {
+    background-color: transparent !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #d4d0f7;
+  }
+
+  html.dark ::-webkit-scrollbar-track {
+    background-color: #1a1a2e;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #7b2fbe;
+    border-radius: 9999px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .section-container {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .section-subtitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7b2fbe;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  html.dark .section-subtitle {
+    color: #9b5fde;
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(123, 47, 190, 0.08);
+    transition: all 0.3s;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 30px rgba(123, 47, 190, 0.15);
+    transform: translateY(-2px);
+  }
+
+  html.dark .card {
+    background-color: rgba(26, 26, 46, 0.7);
+    border-color: rgba(42, 42, 62, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  html.dark .card:hover {
+    box-shadow: 0 8px 30px rgba(155, 95, 222, 0.2);
+  }
+
+  .btn-primary {
+    background-color: #7b2fbe;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #5a1f8e;
+    box-shadow: 0 10px 25px rgba(123, 47, 190, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    border: 2px solid #7b2fbe;
+    color: #7b2fbe;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    background-color: #7b2fbe;
+    color: white;
+    box-shadow: 0 10px 25px rgba(123, 47, 190, 0.4);
+    transform: translateY(-2px);
+  }
+
+  html.dark .btn-outline {
+    border-color: #9b5fde;
+    color: #9b5fde;
+  }
+
+  html.dark .btn-outline:hover {
+    background-color: #9b5fde;
+    color: white;
+  }
+
+  .skill-badge {
+    background-color: rgba(230, 230, 250, 0.6);
+    color: #7b2fbe;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(123, 47, 190, 0.2);
+    transition: all 0.3s;
+    cursor: default;
+    display: inline-block;
+    backdrop-filter: blur(4px);
+  }
+
+  .skill-badge:hover {
+    background-color: #7b2fbe;
+    color: white;
+    border-color: #7b2fbe;
+  }
+
+  html.dark .skill-badge {
+    background-color: rgba(42, 42, 62, 0.6);
+    color: #9b5fde;
+    border-color: rgba(155, 95, 222, 0.2);
+  }
+
+  html.dark .skill-badge:hover {
+    background-color: #9b5fde;
+    color: white;
+  }
+
+  /* Form inputs */
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(123, 47, 190, 0.2);
+    color: #111827;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+    outline: none;
+    font-family: var(--font-family-poppins);
+  }
+
+  .form-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .form-input:focus {
+    border-color: #7b2fbe;
+    box-shadow: 0 0 0 3px rgba(123, 47, 190, 0.15);
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  html.dark .form-input {
+    background-color: rgba(26, 26, 46, 0.6);
+    border-color: rgba(155, 95, 222, 0.2);
+    color: #e6e6fa;
+  }
+
+  html.dark .form-input::placeholder {
+    color: #b8b2f0;
+  }
+
+  html.dark .form-input:focus {
+    border-color: #9b5fde;
+    box-shadow: 0 0 0 3px rgba(155, 95, 222, 0.15);
+    background-color: rgba(26, 26, 46, 0.9);
+  }
 }
