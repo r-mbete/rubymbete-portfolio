@@ -7,6 +7,9 @@
 /* Accent swaps by mode: Maroon carries light, Mauve carries dark */
 
 :root {
+  /* Navbar is fixed and overlays the page, so anchors must stop below it. */
+  --nav-h: 4rem;
+
   --blue: #272030;
   --cloud: #e3ebf2;
   --mauve: #c79a99;
@@ -65,6 +68,16 @@
   body {
     background-color: var(--ground);
     color: var(--ink);
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --nav-h: 5rem;
+    }
+  }
+
+  section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 2.5rem);
   }
 
   ::selection {

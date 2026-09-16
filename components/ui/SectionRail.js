@@ -16,14 +16,17 @@ export default function SectionRail() {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
+    // Collapse the root to a zero-height band at the viewport centre, which is
+    // where the rail sits. Whatever crosses it is what the rail is over.
+    // Ratio-based detection fails here: a section taller than the viewport
+    // never reaches a high ratio, so Experience never became active.
     const observer = new IntersectionObserver(
       (entries) => {
-        const best = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (best) setActive(best.target.id);
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
       },
-      { threshold: [0.2, 0.4, 0.6, 0.8], rootMargin: "-15% 0px -15% 0px" },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
     );
 
     const observed = sections
