@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import EditorialGrid from "@/components/ui/EditorialGrid";
 
 const experiences = [
   {
@@ -55,7 +56,8 @@ const education = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative overflow-hidden">
+    <section id="experience" className="block-invert relative overflow-hidden">
+      <EditorialGrid />
       {/* Floating patches */}
 
       <div className="section-container relative z-10">
@@ -68,12 +70,12 @@ export default function Experience() {
           className="mb-16"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-purple-primary dark:bg-purple-light" />
+            <div className="w-8 h-0.5 bg-accent" />
             <p className="section-subtitle mb-0">Work Experience</p>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-lavender-100 leading-tight">
+          <h2 className="display display-2">
             Experiences that
-            <span className="text-purple-primary dark:text-purple-light">
+            <span className="display-em">
               {" "}
               shaped me.
             </span>
@@ -92,26 +94,26 @@ export default function Experience() {
               className="card group relative overflow-hidden"
             >
               {exp.current && (
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-primary/50 dark:via-purple-light/50 to-transparent" />
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
               )}
 
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-lavender-100 group-hover:text-purple-primary dark:group-hover:text-purple-light transition-colors duration-300">
+                    <h3 className="text-lg font-bold text-ink group-hover:text-accent transition-colors duration-300">
                       {exp.company}
                     </h3>
                   </div>
-                  <p className="text-sm font-semibold text-purple-primary dark:text-purple-light">
+                  <p className="text-sm font-semibold text-accent">
                     {exp.role}
                   </p>
                 </div>
-                <span className="text-xs font-medium flex-shrink-0 w-fit px-3 py-1.5 rounded-full bg-lavender-100/60 dark:bg-dark-border/60 text-gray-500 dark:text-lavender-300 border border-lavender-200/60 dark:border-dark-border">
+                <span className="text-xs font-medium flex-shrink-0 w-fit px-3 py-1.5 rounded-full bg-surface/60 text-ink-muted border border-rule/60">
                   {exp.period}
                 </span>
               </div>
 
-              <p className="text-sm text-gray-500 dark:text-lavender-300 leading-relaxed mb-4">
+              <p className="text-sm text-ink-muted leading-relaxed mb-4">
                 {exp.description}
               </p>
 
@@ -119,19 +121,19 @@ export default function Experience() {
                 {exp.bullets.map((bullet, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-sm text-gray-600 dark:text-lavender-200"
+                    className="flex items-start gap-2 text-sm text-ink-muted"
                   >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-purple-primary/40 dark:bg-purple-light/40" />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-accent/40" />
                     {bullet}
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-wrap gap-2 pt-3 border-t border-lavender-200/40 dark:border-dark-border/40">
+              <div className="flex flex-wrap gap-2 pt-3 border-t border-rule/40">
                 {exp.tech.map((t, i) => (
                   <span
                     key={i}
-                    className="text-xs font-medium px-3 py-1 rounded-full bg-lavender-100/60 dark:bg-dark-border/60 text-gray-500 dark:text-lavender-300 border border-lavender-200/60 dark:border-dark-border"
+                    className="text-xs font-medium px-3 py-1 rounded-full bg-surface/60 text-ink-muted border border-rule/60"
                   >
                     {t}
                   </span>
@@ -149,7 +151,7 @@ export default function Experience() {
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-0.5 bg-purple-primary dark:bg-purple-light" />
+            <div className="w-8 h-0.5 bg-accent" />
             <p className="section-subtitle mb-0">Where I Learned</p>
           </div>
 
@@ -163,17 +165,17 @@ export default function Experience() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card group relative overflow-hidden"
               >
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-primary/30 dark:via-purple-light/30 to-transparent" />
-                <span className="text-xs font-medium px-3 py-1 rounded-full inline-block mb-3 bg-lavender-200/50 dark:bg-dark-border text-gray-500 dark:text-lavender-300 border border-lavender-200 dark:border-dark-border">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+                <span className="text-xs font-medium px-3 py-1 rounded-full inline-block mb-3 bg-surface/50 text-ink-muted border border-rule">
                   {edu.period}
                 </span>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-lavender-100 mb-1 group-hover:text-purple-primary dark:group-hover:text-purple-light transition-colors duration-300">
+                <h3 className="text-lg font-bold text-ink mb-1 group-hover:text-accent transition-colors duration-300">
                   {edu.school}
                 </h3>
-                <p className="text-sm font-semibold text-purple-primary dark:text-purple-light mb-2">
+                <p className="text-sm font-semibold text-accent mb-2">
                   {edu.degree}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-lavender-300">
+                <p className="text-sm text-ink-muted">
                   {edu.detail}
                 </p>
               </motion.div>

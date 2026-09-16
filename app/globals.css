@@ -14,13 +14,15 @@
 
   /* Semantic roles - LIGHT: Cloud ground, Blue ink, Maroon accent */
   --ground: var(--cloud);
-  --surface: #eef3f8;
+  --surface: color-mix(in srgb, var(--maroon) 4%, var(--cloud));
   --ink: var(--blue);
-  --ink-muted: color-mix(in srgb, var(--blue) 62%, transparent);
+  --ink-display: var(--maroon);
+  --display-em: var(--blue);
+  --ink-muted: color-mix(in srgb, var(--maroon) 58%, transparent);
   --accent: var(--maroon);
   --accent-soft: color-mix(in srgb, var(--mauve) 45%, transparent);
-  --rule: color-mix(in srgb, var(--blue) 14%, transparent);
-  --rule-strong: color-mix(in srgb, var(--blue) 28%, transparent);
+  --rule: color-mix(in srgb, var(--maroon) 20%, transparent);
+  --rule-strong: color-mix(in srgb, var(--maroon) 38%, transparent);
 }
 
 .dark {
@@ -28,6 +30,8 @@
   --ground: var(--blue);
   --surface: #2f2739;
   --ink: var(--cloud);
+  --ink-display: var(--cloud);
+  --display-em: var(--mauve);
   --ink-muted: color-mix(in srgb, var(--cloud) 60%, transparent);
   --accent: var(--mauve);
   --accent-soft: color-mix(in srgb, var(--maroon) 70%, transparent);
@@ -44,6 +48,7 @@
   --color-ground: var(--ground);
   --color-surface: var(--surface);
   --color-ink: var(--ink);
+  --color-ink-display: var(--ink-display);
   --color-ink-muted: var(--ink-muted);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
@@ -83,8 +88,10 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
       scroll-behavior: auto !important;
     }
   }
@@ -134,20 +141,46 @@
     font-weight: 400;
     line-height: 0.95;
     letter-spacing: -0.02em;
+    color: var(--ink-display);
   }
-}
 
-/* Transitional: old sections still use these. Deleted as each is rebuilt. */
+  /* One scale, three rungs, so every heading on the page relates to the others. */
+  .display-1 {
+    font-size: clamp(3rem, 13vw, 10.5rem);
+  }
+  .display-2 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+  }
+  .display-3 {
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+  }
 
-@theme inline {
-  --color-purple-primary: var(--accent);
-  --color-purple-light: var(--accent);
-  --color-lavender-100: var(--ink);
-  --color-lavender-200: var(--ink-muted);
-  --color-lavender-300: var(--ink-muted);
-  --color-dark-bg: var(--ground);
-  --color-dark-card: var(--surface);
-  --color-dark-border: var(--rule);
+  /* The emphasised half of a heading. Italic is where a Didone earns its keep. */
+  .display-em {
+    font-style: italic;
+    color: var(--display-em);
+  }
+
+  /* Underline that sweeps in on hover and back out on leave. */
+  .link-sweep {
+    position: relative;
+  }
+  .link-sweep::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.2em;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-sweep:hover::after,
+  .link-sweep:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 @layer components {
@@ -269,4 +302,63 @@
       transparent 9px
     );
   }
+}
+
+/* Full-bleed colour field. Redefines the role vars, so contents re-colour themselves. */
+.block-invert {
+  --ground: var(--maroon);
+  --surface: #4a1212;
+  --ink: var(--cloud);
+  --ink-display: var(--cloud);
+  --display-em: var(--mauve);
+  --ink-muted: color-mix(in srgb, var(--cloud) 68%, transparent);
+  --accent: var(--mauve);
+  --accent-soft: color-mix(in srgb, var(--mauve) 35%, transparent);
+  --rule: color-mix(in srgb, var(--cloud) 22%, transparent);
+  --rule-strong: color-mix(in srgb, var(--cloud) 40%, transparent);
+  background-color: var(--ground);
+  color: var(--ink);
+}
+
+/* Maroon on the dark ground is 1.1:1, so dark mode inverts to a warm Mauve panel. */
+.dark .block-invert {
+  --ground: var(--mauve);
+  --surface: #d3aaa9;
+  --ink: var(--maroon);
+  --ink-display: var(--maroon);
+  --display-em: var(--blue);
+  --ink-muted: color-mix(in srgb, var(--maroon) 72%, transparent);
+  --accent: var(--maroon);
+  --accent-soft: color-mix(in srgb, var(--maroon) 30%, transparent);
+  --rule: color-mix(in srgb, var(--maroon) 25%, transparent);
+  --rule-strong: color-mix(in srgb, var(--maroon) 45%, transparent);
+}
+
+/* Staged reveal in CSS so content is never gated behind JS. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Fixed overlays sit outside .block-invert, so they re-point their own tokens. */
+.on-block {
+  --ink-muted: color-mix(in srgb, var(--cloud) 72%, transparent);
+  --accent: var(--cloud);
+  --rule-strong: color-mix(in srgb, var(--cloud) 45%, transparent);
+}
+
+.dark .on-block {
+  --ink-muted: color-mix(in srgb, var(--maroon) 75%, transparent);
+  --accent: var(--maroon);
+  --rule-strong: color-mix(in srgb, var(--maroon) 55%, transparent);
 }

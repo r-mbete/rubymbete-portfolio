@@ -1,4 +1,5 @@
 import { ThemeProvider } from "next-themes";
+import MotionProvider from "@/components/ui/MotionProvider";
 import { Bodoni_Moda, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -35,14 +36,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${bodoni.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${bodoni.variable} ${inter.variable}`}
+    >
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
         >
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
       </body>
     </html>

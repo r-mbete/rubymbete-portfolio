@@ -33,7 +33,7 @@ export default function Navbar() {
       transition-all duration-300
       ${
         scrolled
-          ? "bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md shadow-sm border-b border-lavender-200 dark:border-dark-border"
+          ? "bg-ground/85 backdrop-blur-md border-b border-rule"
           : "bg-transparent"
       }
     `}
@@ -44,9 +44,9 @@ export default function Navbar() {
           <a
             href="#"
             className="
-              text-xl font-bold
-              text-purple-primary dark:text-purple-light
-              tracking-wide hover:opacity-80
+              display text-xl
+              text-accent
+              hover:opacity-80
               transition-opacity duration-300
             "
           >
@@ -60,9 +60,9 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className="
-                  text-gray-700 dark:text-lavender-200
-                  hover:text-purple-primary dark:hover:text-purple-light
-                  font-medium text-sm
+                  label
+                  text-ink-muted
+                  hover:text-accent
                   transition-colors duration-300
                   relative group
                 "
@@ -71,8 +71,8 @@ export default function Navbar() {
                 {/* Underline animation */}
                 <span
                   className="
-                  absolute -bottom-1 left-0 w-0 h-0.5
-                  bg-purple-primary dark:bg-purple-light
+                  absolute -bottom-1 left-0 w-0 h-px
+                  bg-accent
                   group-hover:w-full
                   transition-all duration-300
                 "
@@ -90,17 +90,17 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="
                 md:hidden p-2 rounded-full
-                bg-lavender-200 dark:bg-dark-card
-                border border-lavender-300 dark:border-dark-border
-                hover:bg-lavender-300 dark:hover:bg-dark-border
+                bg-surface
+                border border-rule
+                hover:bg-surface
                 transition-all duration-300
               "
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <X className="w-5 h-5 text-purple-primary dark:text-purple-light" />
+                <X className="w-5 h-5 text-accent" />
               ) : (
-                <Menu className="w-5 h-5 text-purple-primary dark:text-purple-light" />
+                <Menu className="w-5 h-5 text-accent" />
               )}
             </button>
           </div>
@@ -113,9 +113,9 @@ export default function Navbar() {
         md:hidden
         transition-all duration-300 overflow-hidden
         ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
-        bg-white/95 dark:bg-dark-bg/95
+        bg-white/95
         backdrop-blur-md
-        border-b border-lavender-200 dark:border-dark-border
+        border-b border-rule
       `}
       >
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
@@ -125,9 +125,9 @@ export default function Navbar() {
               href={link.href}
               onClick={handleLinkClick}
               className="
-                text-gray-700 dark:text-lavender-200
-                hover:text-purple-primary dark:hover:text-purple-light
-                hover:bg-lavender-100 dark:hover:bg-dark-card
+                text-ink
+                hover:text-accent
+                hover:bg-surface
                 font-medium text-sm
                 px-4 py-3 rounded-xl
                 transition-all duration-300

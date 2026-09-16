@@ -8,11 +8,11 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-full bg-lavender-200 dark:bg-dark-card border border-lavender-300 dark:border-dark-border hover:bg-lavender-300 dark:hover:bg-dark-border transition-all duration-300 hover:scale-110"
+      className="p-2 rounded-full bg-surface border border-rule hover:bg-surface transition-all duration-300 hover:scale-110"
       aria-label="Toggle theme"
     >
       <Sun className="w-5 h-5 text-yellow-400 hidden dark:block" />
-      <Moon className="w-5 h-5 text-purple-primary dark:hidden" />
+      <Moon className="w-5 h-5 text-accent dark:hidden" />
     </button>
   );
 }

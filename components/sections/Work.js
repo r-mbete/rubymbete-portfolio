@@ -1,6 +1,5 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
-import EditorialGrid from "@/components/ui/EditorialGrid";
 
 const projects = [
   {
@@ -37,7 +36,6 @@ export default function Work() {
 
   return (
     <section id="work" className="relative overflow-hidden py-28 sm:py-36">
-      <EditorialGrid />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
         <motion.div {...reveal} className="mb-20 flex items-center gap-5">
@@ -51,10 +49,10 @@ export default function Work() {
             <motion.article
               key={project.title}
               {...reveal}
-              className="grid gap-10 md:grid-cols-12 md:gap-12"
+              className="group grid gap-10 md:grid-cols-12 md:gap-12"
             >
               <div className="md:col-span-7">
-                <div className="hatch rule-t rule-b rule-l rule-r aspect-[4/3] w-full" />
+                <div className="hatch rule-t rule-b rule-l rule-r aspect-[4/3] w-full transition-colors duration-500 group-hover:border-accent" />
               </div>
 
               <div className="flex flex-col justify-center md:col-span-5">
@@ -70,7 +68,7 @@ export default function Work() {
                   </span>
                 </div>
 
-                <h3 className="display mb-5 text-[clamp(2rem,5vw,3.25rem)] text-ink">
+                <h3 className="display display-3 mb-5 transition-colors duration-500 group-hover:text-accent">
                   {project.title}
                 </h3>
 
@@ -80,7 +78,7 @@ export default function Work() {
 
                 <ul className="flex flex-wrap gap-2">
                   {project.stack.map((tech) => (
-                    <li key={tech} className="skill-badge">
+                    <li key={tech} className="skill-badge transition-colors duration-300 group-hover:border-rule-strong">
                       {tech}
                     </li>
                   ))}

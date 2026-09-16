@@ -69,12 +69,12 @@ export default function Skills() {
           className="mb-16"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-purple-primary dark:bg-purple-light" />
+            <div className="w-8 h-0.5 bg-accent" />
             <p className="section-subtitle mb-0">What I Work With</p>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-lavender-100 leading-tight">
+          <h2 className="display display-2">
             Tools I use to
-            <span className="text-purple-primary dark:text-purple-light">
+            <span className="display-em">
               {" "}
               bring ideas to life.
             </span>
@@ -107,30 +107,30 @@ export default function Skills() {
                     card cursor-default relative overflow-hidden
                     w-full sm:w-3/4 lg:w-2/3
                     transition-all duration-500
-                    ${isActive ? "border-purple-primary/40 dark:border-purple-light/40 shadow-lg shadow-purple-primary/10" : ""}
+                    ${isActive ? "border-accent/40" : ""}
                   `}
                 >
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-primary/60 dark:via-purple-light/60 to-transparent"
+                    className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
                   />
 
                   <div className="flex items-center gap-3 mb-5">
                     <div
-                      className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all duration-300 ${isActive ? "bg-purple-primary dark:bg-purple-light" : "bg-lavender-100 dark:bg-dark-border"}`}
+                      className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all duration-300 ${isActive ? "bg-accent" : "bg-surface"}`}
                     >
                       <Icon
-                        className={`w-5 h-5 transition-colors duration-300 ${isActive ? "text-white" : "text-purple-primary dark:text-purple-light"}`}
+                        className={`w-5 h-5 transition-colors duration-300 ${isActive ? "text-white" : "text-accent"}`}
                       />
                     </div>
                     <div>
                       <h3
-                        className={`font-bold text-base leading-tight transition-colors duration-300 ${isActive ? "text-purple-primary dark:text-purple-light" : "text-gray-900 dark:text-lavender-100"}`}
+                        className={`font-bold text-base leading-tight transition-colors duration-300 ${isActive ? "text-accent" : "text-ink"}`}
                       >
                         {group.category}
                       </h3>
-                      <p className="text-xs text-gray-400 dark:text-lavender-300 mt-0.5">
+                      <p className="text-xs text-ink-muted mt-0.5">
                         {group.tagline}
                       </p>
                     </div>
@@ -149,7 +149,7 @@ export default function Skills() {
                           duration: 0.3,
                           delay: isActive ? i * 0.04 : 0,
                         }}
-                        className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-300 ${isActive ? "bg-purple-primary/10 dark:bg-purple-light/10 text-purple-primary dark:text-purple-light border-purple-primary/20 dark:border-purple-light/20" : "bg-lavender-100/40 dark:bg-dark-border/40 text-gray-500 dark:text-lavender-300 border-lavender-200/40 dark:border-dark-border/40"}`}
+                        className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-300 ${isActive ? "bg-accent/10 text-accent border-accent/20" : "bg-surface/40 text-ink-muted border-rule/40"}`}
                       >
                         {skill}
                       </motion.span>
@@ -167,7 +167,7 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
           style={{ fontFamily: "var(--font-caveat)" }}
-          className="text-center mt-16 text-xl text-gray-400 dark:text-lavender-300"
+          className="text-center mt-16 text-xl text-ink-muted"
         >
           and always learning more ✦
         </motion.p>

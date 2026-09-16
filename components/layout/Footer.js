@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer
       className="
-      border-t border-lavender-200/50 dark:border-dark-border
+      border-t border-rule/50
       py-8
     "
     >
@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Copyright */}
           <p
             className="
-            text-gray-500 dark:text-lavender-300
+            text-ink-muted
             text-sm flex items-center gap-1
           "
           >
