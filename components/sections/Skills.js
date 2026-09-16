@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Palette, Database, Wrench } from "lucide-react";
-import { skillsElements } from "@/components/ui/FloatingElements";
 
 const skillGroups = [
   {
@@ -60,7 +59,6 @@ export default function Skills() {
   return (
     <section id="skills" className="relative overflow-hidden">
       {/* Floating patches */}
-      {skillsElements}
 
       <div className="section-container relative z-10">
         <motion.div

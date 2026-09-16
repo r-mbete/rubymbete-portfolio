@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "framer-motion";
-import { experienceElements } from "@/components/ui/FloatingElements";
 
 const experiences = [
   {
@@ -58,7 +57,6 @@ export default function Experience() {
   return (
     <section id="experience" className="relative overflow-hidden">
       {/* Floating patches */}
-      {experienceElements}
 
       <div className="section-container relative z-10">
         {/* Section Header */}

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, X, ExternalLink, MessageCircle, Mail } from "lucide-react";
-import { contactElements } from "@/components/ui/FloatingElements";
 
 function ContactDialog({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -163,7 +162,6 @@ export default function Contact() {
   return (
     <section id="contact" className="relative overflow-hidden">
       {/* Floating patches */}
-      {contactElements}
 
       <div className="section-container relative z-10">
         <div className="max-w-2xl mx-auto text-center">

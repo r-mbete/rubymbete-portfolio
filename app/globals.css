@@ -1,268 +1,272 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
-
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
 
-@theme {
-  --font-family-poppins: "Poppins", sans-serif;
+/* Palette: Blue #272030, Cloud #E3EBF2, Mauve #C79A99, Maroon #3B0A0A */
+/* Never pair Maroon on Blue (1.1:1) or Mauve on Cloud (2.2:1) — both fail */
+/* Accent swaps by mode: Maroon carries light, Mauve carries dark */
 
-  --color-lavender-50: #f5f3ff;
-  --color-lavender-100: #e6e6fa;
-  --color-lavender-200: #d4d0f7;
-  --color-lavender-300: #b8b2f0;
-  --color-lavender-400: #9b8fe8;
-  --color-lavender-500: #7c6dd8;
-  --color-lavender-600: #6450c4;
-  --color-lavender-700: #5340a8;
-  --color-lavender-800: #453589;
-  --color-lavender-900: #3a2d6e;
+:root {
+  --blue: #272030;
+  --cloud: #e3ebf2;
+  --mauve: #c79a99;
+  --maroon: #3b0a0a;
 
-  --color-purple-primary: #7b2fbe;
-  --color-purple-light: #9b5fde;
-  --color-purple-dark: #5a1f8e;
+  /* Semantic roles - LIGHT: Cloud ground, Blue ink, Maroon accent */
+  --ground: var(--cloud);
+  --surface: #eef3f8;
+  --ink: var(--blue);
+  --ink-muted: color-mix(in srgb, var(--blue) 62%, transparent);
+  --accent: var(--maroon);
+  --accent-soft: color-mix(in srgb, var(--mauve) 45%, transparent);
+  --rule: color-mix(in srgb, var(--blue) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--blue) 28%, transparent);
+}
 
-  --color-dark-bg: #0f0f1a;
-  --color-dark-card: #1a1a2e;
-  --color-dark-border: #2a2a3e;
+.dark {
+  /* Semantic roles - DARK: Blue ground, Cloud ink, Mauve accent */
+  --ground: var(--blue);
+  --surface: #2f2739;
+  --ink: var(--cloud);
+  --ink-muted: color-mix(in srgb, var(--cloud) 60%, transparent);
+  --accent: var(--mauve);
+  --accent-soft: color-mix(in srgb, var(--maroon) 70%, transparent);
+  --rule: color-mix(in srgb, var(--cloud) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--cloud) 30%, transparent);
+}
+
+/* Tokens point at mode-dependent vars, so colour needs no dark: variant */
+
+@theme inline {
+  --font-display: var(--font-bodoni), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    font-family: var(--font-family-poppins);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* LIGHT MODE — whole page lavender */
   body {
-    background-color: #e6e6fa;
-    color: #111827;
-    transition:
-      background-color 0.3s,
-      color 0.3s;
+    background-color: var(--ground);
+    color: var(--ink);
   }
 
-  /* DARK MODE — whole page dark */
-  html.dark body {
-    background-color: #0f0f1a;
-    color: #e6e6fa;
-  }
-
-  /* Remove ALL section borders and make backgrounds transparent */
-  section {
-    border: none !important;
-    background-color: transparent !important;
-  }
-
-  html.dark section {
-    background-color: transparent !important;
+  ::selection {
+    background-color: var(--accent);
+    color: var(--ground);
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
   }
-
   ::-webkit-scrollbar-track {
-    background-color: #d4d0f7;
+    background-color: var(--ground);
   }
-
-  html.dark ::-webkit-scrollbar-track {
-    background-color: #1a1a2e;
-  }
-
   ::-webkit-scrollbar-thumb {
-    background-color: #7b2fbe;
-    border-radius: 9999px;
+    background-color: var(--rule-strong);
   }
+
+  /* Respect the OS setting. Every reveal below collapses to a plain cut. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@layer components {
+  /* The editorial grid. Hairline rules the content is placed against. */
+  .rule-t {
+    border-top: 1px solid var(--rule);
+  }
+  .rule-b {
+    border-bottom: 1px solid var(--rule);
+  }
+  .rule-l {
+    border-left: 1px solid var(--rule);
+  }
+  .rule-r {
+    border-right: 1px solid var(--rule);
+  }
+
+  /* Wide-tracked caps. The label voice, per the reference. */
+  .label {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  /* Ordinal numerals used as navigation: 01, 02, 03 */
+  .ordinal {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Transitional: old sections still use these. Deleted as each is rebuilt. */
+
+@theme inline {
+  --color-purple-primary: var(--accent);
+  --color-purple-light: var(--accent);
+  --color-lavender-100: var(--ink);
+  --color-lavender-200: var(--ink-muted);
+  --color-lavender-300: var(--ink-muted);
+  --color-dark-bg: var(--ground);
+  --color-dark-card: var(--surface);
+  --color-dark-border: var(--rule);
 }
 
 @layer components {
   .section-container {
     max-width: 72rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .section-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .section-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
+    margin-inline: auto;
+    padding: 5rem 1.5rem;
   }
 
   .section-subtitle {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #7b2fbe;
+    letter-spacing: 0.22em;
+    color: var(--accent);
     margin-bottom: 1rem;
     display: block;
   }
 
-  html.dark .section-subtitle {
-    color: #9b5fde;
-  }
-
   .card {
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 1rem;
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.25rem;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(123, 47, 190, 0.08);
-    transition: all 0.3s;
+    transition: border-color 0.3s;
   }
 
   .card:hover {
-    box-shadow: 0 8px 30px rgba(123, 47, 190, 0.15);
-    transform: translateY(-2px);
+    border-color: var(--rule-strong);
   }
 
-  html.dark .card {
-    background-color: rgba(26, 26, 46, 0.7);
-    border-color: rgba(42, 42, 62, 0.8);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  html.dark .card:hover {
-    box-shadow: 0 8px 30px rgba(155, 95, 222, 0.2);
+  .btn-primary,
+  .btn-outline {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    padding: 0.9rem 1.75rem;
+    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
   }
 
   .btn-primary {
-    background-color: #7b2fbe;
-    color: white;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
+    background-color: var(--accent);
+    color: var(--ground);
+    border: 1px solid var(--accent);
   }
 
   .btn-primary:hover {
-    background-color: #5a1f8e;
-    box-shadow: 0 10px 25px rgba(123, 47, 190, 0.4);
-    transform: translateY(-2px);
+    background-color: transparent;
+    color: var(--accent);
   }
 
   .btn-outline {
-    border: 2px solid #7b2fbe;
-    color: #7b2fbe;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
     background-color: transparent;
-    cursor: pointer;
+    color: var(--accent);
+    border: 1px solid var(--rule-strong);
   }
 
   .btn-outline:hover {
-    background-color: #7b2fbe;
-    color: white;
-    box-shadow: 0 10px 25px rgba(123, 47, 190, 0.4);
-    transform: translateY(-2px);
-  }
-
-  html.dark .btn-outline {
-    border-color: #9b5fde;
-    color: #9b5fde;
-  }
-
-  html.dark .btn-outline:hover {
-    background-color: #9b5fde;
-    color: white;
+    border-color: var(--accent);
   }
 
   .skill-badge {
-    background-color: rgba(230, 230, 250, 0.6);
-    color: #7b2fbe;
-    padding: 0.4rem 1rem;
-    border-radius: 9999px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    border: 1px solid rgba(123, 47, 190, 0.2);
+    font-family: var(--font-sans);
+    background-color: transparent;
+    color: var(--ink-muted);
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--rule);
+    border-radius: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
     transition: all 0.3s;
-    cursor: default;
     display: inline-block;
-    backdrop-filter: blur(4px);
   }
 
   .skill-badge:hover {
-    background-color: #7b2fbe;
-    color: white;
-    border-color: #7b2fbe;
+    color: var(--accent);
+    border-color: var(--accent);
   }
 
-  html.dark .skill-badge {
-    background-color: rgba(42, 42, 62, 0.6);
-    color: #9b5fde;
-    border-color: rgba(155, 95, 222, 0.2);
-  }
-
-  html.dark .skill-badge:hover {
-    background-color: #9b5fde;
-    color: white;
-  }
-
-  /* Form inputs */
   .form-input {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(123, 47, 190, 0.2);
-    color: #111827;
+    padding: 0.85rem 1rem;
+    border-radius: 0;
+    background-color: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: var(--font-sans);
     font-size: 0.875rem;
-    transition: all 0.3s;
+    transition: border-color 0.3s;
     outline: none;
-    font-family: var(--font-family-poppins);
   }
 
   .form-input::placeholder {
-    color: #9ca3af;
+    color: var(--ink-muted);
   }
 
   .form-input:focus {
-    border-color: #7b2fbe;
-    box-shadow: 0 0 0 3px rgba(123, 47, 190, 0.15);
-    background-color: rgba(255, 255, 255, 0.9);
+    border-color: var(--accent);
   }
+}
 
-  html.dark .form-input {
-    background-color: rgba(26, 26, 46, 0.6);
-    border-color: rgba(155, 95, 222, 0.2);
-    color: #e6e6fa;
-  }
-
-  html.dark .form-input::placeholder {
-    color: #b8b2f0;
-  }
-
-  html.dark .form-input:focus {
-    border-color: #9b5fde;
-    box-shadow: 0 0 0 3px rgba(155, 95, 222, 0.15);
-    background-color: rgba(26, 26, 46, 0.9);
+@layer components {
+  /* Placeholder fill for work with no imagery yet, as the reference does */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--rule) 0,
+      var(--rule) 1px,
+      transparent 1px,
+      transparent 9px
+    );
   }
 }

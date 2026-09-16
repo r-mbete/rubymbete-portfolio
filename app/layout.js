@@ -1,11 +1,19 @@
 import { ThemeProvider } from "next-themes";
-import { Poppins } from "next/font/google";
+import { Bodoni_Moda, Inter } from "next/font/google";
 import "./globals.css";
 
-const poppins = Poppins({
+// Display: a true Didone, matching the reference and the palette board.
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-poppins",
+  variable: "--font-bodoni",
+  display: "swap",
+});
+
+// Labels, UI and body copy.
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata = {
@@ -21,14 +29,14 @@ export const metadata = {
     "React",
   ],
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%237c3aed'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='13' fill='white' letter-spacing='-0.5'>RM</text></svg>",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%233B0A0A'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='15' fill='%23E3EBF2'>RM</text></svg>",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={poppins.variable}>
+      <body className={`${bodoni.variable} ${inter.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
