@@ -1,54 +1,59 @@
+import Field from "@/components/ui/Field";
+import Seam from "@/components/ui/Seam";
+import Methali from "@/components/ui/Methali";
+import SaveForLater from "@/components/ui/SaveForLater";
+
+// Composed like the palette card: plum over periwinkle, a name and two chips on each.
 export default function Hero() {
   return (
-    <section
-      id="home"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden py-28"
-    >
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+    <section id="home">
+      <Field
+        as="div"
+        tone="plum"
+        innerClassName="mx-auto flex min-h-[80svh] w-full max-w-6xl flex-col px-6 pt-24 pb-10 sm:pt-32"
+      >
         <div
-          className="rise mb-16 flex items-center gap-5 sm:mb-28"
+          className="rise flex items-center justify-between gap-4"
           style={{ animationDelay: "0.1s" }}
         >
-          <span className="ordinal text-accent">01</span>
-          <span className="h-px flex-1 bg-rule" />
-          <span className="label hidden text-ink-muted sm:block">
-            Nairobi, Kenya
-          </span>
+          <span className="label text-ink-muted">Portfolio — 2026</span>
+          <span className="label text-ink-muted">Nairobi, Kenya</span>
         </div>
 
-        <div className="text-center">
-          <p
-            className="rise label mb-6 text-ink-muted"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Software Engineer
-          </p>
-
+        <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
           <h1
             className="rise display display-1"
-            style={{ animationDelay: "0.3s" }}
+            style={{ animationDelay: "0.25s" }}
           >
             Ruby Mbete
           </h1>
-
-          <p
-            className="rise label mt-6 text-accent"
+          <div
+            className="rise mt-10 flex flex-wrap justify-center gap-3 sm:gap-10"
             style={{ animationDelay: "0.4s" }}
           >
-            UI &middot; UX Designer
-          </p>
-        </div>
-
-        <div
-          className="rise mt-16 flex flex-col items-center gap-10 sm:mt-24"
-          style={{ animationDelay: "0.55s" }}
-        >
-          <p className="max-w-sm text-center text-[0.9375rem] leading-relaxed text-ink-muted">
+            <span className="chip chip-lg">Software Engineer</span>
+            <span className="chip chip-lg">UI · UX Designer</span>
+          </div>
+          <p
+            className="rise mt-10 max-w-sm text-[0.9375rem] leading-relaxed text-ink-muted"
+            style={{ animationDelay: "0.55s" }}
+          >
             I care about the people behind every screen, crafting interfaces
             that feel intuitive and delightful to use.
           </p>
+        </div>
+      </Field>
 
-          <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
+      <Seam from="plum" seed={7} />
+
+      <Field
+        as="div"
+        tone="peri"
+        innerClassName="mx-auto w-full max-w-6xl px-6 pt-10 pb-20 sm:pt-16 sm:pb-24"
+      >
+        <Methali />
+        <div className="mt-20 flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
             <a href="#work" className="btn-primary justify-center">
               View the work
             </a>
@@ -56,9 +61,9 @@ export default function Hero() {
               Get in touch
             </a>
           </div>
+          <SaveForLater className="self-end sm:self-auto" />
         </div>
-      </div>
-
+      </Field>
     </section>
   );
 }

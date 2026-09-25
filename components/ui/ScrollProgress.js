@@ -16,7 +16,7 @@ export default function ScrollProgress() {
     <motion.div
       aria-hidden="true"
       style={{ scaleX: reduceMotion ? scrollYProgress : scaleX }}
-      className="fixed inset-x-0 top-0 z-50 h-px origin-left bg-accent"
+      className="absolute inset-x-0 top-0 h-0.5 origin-left bg-accent"
     />
   );
 }

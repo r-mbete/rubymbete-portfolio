@@ -1,52 +1,68 @@
 @import "tailwindcss";
 
-@variant dark (&:where(.dark, .dark *));
-
-/* Palette: Blue #272030, Cloud #E3EBF2, Mauve #C79A99, Maroon #3B0A0A */
-/* Never pair Maroon on Blue (1.1:1) or Mauve on Cloud (2.2:1) — both fail */
-/* Accent swaps by mode: Maroon carries light, Mauve carries dark */
+/* Palette: Dark Plum #4F0C28, Periwinkle #C5D2F8. 9.8:1 against each other. */
+/* Every field is one colour on the other; tints come from mixing the two, never a third hue. */
 
 :root {
   /* Navbar is fixed and overlays the page, so anchors must stop below it. */
   --nav-h: 4rem;
 
-  --blue: #272030;
-  --cloud: #e3ebf2;
-  --mauve: #c79a99;
-  --maroon: #3b0a0a;
-
-  /* Semantic roles - LIGHT: Cloud ground, Blue ink, Maroon accent */
-  --ground: var(--cloud);
-  --surface: color-mix(in srgb, var(--maroon) 4%, var(--cloud));
-  --ink: var(--blue);
-  --ink-display: var(--maroon);
-  --display-em: var(--blue);
-  --ink-muted: color-mix(in srgb, var(--maroon) 58%, transparent);
-  --accent: var(--maroon);
-  --accent-soft: color-mix(in srgb, var(--mauve) 45%, transparent);
-  --rule: color-mix(in srgb, var(--maroon) 20%, transparent);
-  --rule-strong: color-mix(in srgb, var(--maroon) 38%, transparent);
+  --plum: #4f0c28;
+  --peri: #c5d2f8;
 }
 
-.dark {
-  /* Semantic roles - DARK: Blue ground, Cloud ink, Mauve accent */
-  --ground: var(--blue);
-  --surface: #2f2739;
-  --ink: var(--cloud);
-  --ink-display: var(--cloud);
-  --display-em: var(--mauve);
-  --ink-muted: color-mix(in srgb, var(--cloud) 60%, transparent);
-  --accent: var(--mauve);
-  --accent-soft: color-mix(in srgb, var(--maroon) 70%, transparent);
-  --rule: color-mix(in srgb, var(--cloud) 14%, transparent);
-  --rule-strong: color-mix(in srgb, var(--cloud) 30%, transparent);
+/* Tone classes set roles only; .field also paints the ground. */
+:root,
+.tone-peri,
+.tone-plum .flip:is(:hover, :focus-visible) {
+  --ground: var(--peri);
+  --surface: color-mix(in srgb, var(--plum) 6%, var(--peri));
+  --ink: var(--plum);
+  --ink-display: var(--plum);
+  --display-em: color-mix(in srgb, var(--plum) 78%, var(--peri));
+  --ink-muted: color-mix(in srgb, var(--plum) 74%, var(--peri));
+  --accent: var(--plum);
+  --opposite: var(--plum);
+  --rule: color-mix(in srgb, var(--plum) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--plum) 42%, transparent);
 }
 
-/* Tokens point at mode-dependent vars, so colour needs no dark: variant */
+.tone-plum,
+.tone-peri .flip:is(:hover, :focus-visible) {
+  --ground: var(--plum);
+  --surface: color-mix(in srgb, var(--peri) 8%, var(--plum));
+  --ink: var(--peri);
+  --ink-display: var(--peri);
+  --display-em: color-mix(in srgb, var(--peri) 80%, var(--plum));
+  --ink-muted: color-mix(in srgb, var(--peri) 74%, var(--plum));
+  --accent: var(--peri);
+  --opposite: var(--peri);
+  --rule: color-mix(in srgb, var(--peri) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--peri) 42%, transparent);
+}
+
+.field {
+  position: relative;
+  background-color: var(--ground);
+  color: var(--ink);
+}
+
+/* A block that swaps to the other colour while hovered, e.g. a skills column. */
+.flip {
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+}
+
+.flip:is(:hover, :focus-visible) {
+  background-color: var(--ground);
+  color: var(--ink);
+}
 
 @theme inline {
-  --font-display: var(--font-bodoni), Georgia, serif;
+  --font-display: var(--font-newsreader), Georgia, serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   --color-ground: var(--ground);
   --color-surface: var(--surface);
@@ -54,7 +70,7 @@
   --color-ink-display: var(--ink-display);
   --color-ink-muted: var(--ink-muted);
   --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
+  --color-opposite: var(--opposite);
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
 }
@@ -66,7 +82,7 @@
   }
 
   body {
-    background-color: var(--ground);
+    background-color: var(--plum);
     color: var(--ink);
   }
 
@@ -77,7 +93,7 @@
   }
 
   section[id] {
-    scroll-margin-top: calc(var(--nav-h) + 2.5rem);
+    scroll-margin-top: var(--nav-h);
   }
 
   ::selection {
@@ -89,10 +105,10 @@
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background-color: var(--ground);
+    background-color: var(--plum);
   }
   ::-webkit-scrollbar-thumb {
-    background-color: var(--rule-strong);
+    background-color: var(--peri);
   }
 
   /* Respect the OS setting. Every reveal below collapses to a plain cut. */
@@ -131,35 +147,34 @@
     border-right: 1px solid var(--rule);
   }
 
-  /* Wide-tracked caps. The label voice, per the reference. */
+  /* Mono caps. The label voice, as on the palette card. */
   .label {
-    font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.14em;
   }
 
   /* Ordinal numerals used as navigation: 01, 02, 03 */
   .ordinal {
-    font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
     font-variant-numeric: tabular-nums;
   }
 
   .display {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 500;
     line-height: 0.95;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     color: var(--ink-display);
   }
 
   /* One scale, three rungs, so every heading on the page relates to the others. */
   .display-1 {
-    font-size: clamp(3rem, 13vw, 10.5rem);
+    font-size: clamp(3.25rem, 13vw, 10.5rem);
   }
   .display-2 {
     font-size: clamp(2.5rem, 7vw, 5rem);
@@ -168,10 +183,35 @@
     font-size: clamp(1.75rem, 4.5vw, 3rem);
   }
 
-  /* The emphasised half of a heading. Italic is where a Didone earns its keep. */
   .display-em {
     font-style: italic;
+    font-weight: 400;
     color: var(--display-em);
+  }
+
+  /* Outlined pill, lifted from the hex/RGB chips on the palette card. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--rule-strong);
+    border-radius: 0.625rem;
+    padding: 0.3rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+    transition:
+      color 0.3s,
+      border-color 0.3s,
+      background-color 0.3s;
+  }
+
+  .chip-lg {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.2vw, 1.375rem);
+    letter-spacing: 0;
+    padding: 0.5rem 1.4rem;
+    color: var(--ink);
   }
 
   /* Underline that sweeps in on hover and back out on leave. */
@@ -194,47 +234,28 @@
     transform: scaleX(1);
     transform-origin: left;
   }
-}
 
-@layer components {
   .section-container {
     max-width: 72rem;
     margin-inline: auto;
-    padding: 5rem 1.5rem;
-  }
-
-  .section-subtitle {
-    font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-    margin-bottom: 1rem;
-    display: block;
+    padding: 6rem 1.5rem;
   }
 
   .card {
     background-color: var(--surface);
     border: 1px solid var(--rule);
-    border-radius: 0.25rem;
+    border-radius: 0.75rem;
     padding: 1.5rem;
-    transition: border-color 0.3s;
-  }
-
-  .card:hover {
-    border-color: var(--rule-strong);
   }
 
   .btn-primary,
   .btn-outline {
-    font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     padding: 0.9rem 1.75rem;
-    border-radius: 0;
+    border-radius: 0.625rem;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -262,32 +283,16 @@
 
   .btn-outline:hover {
     border-color: var(--accent);
-  }
-
-  .skill-badge {
-    font-family: var(--font-sans);
-    background-color: transparent;
-    color: var(--ink-muted);
-    padding: 0.4rem 0.9rem;
-    border: 1px solid var(--rule);
-    border-radius: 0;
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    transition: all 0.3s;
-    display: inline-block;
-  }
-
-  .skill-badge:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background-color: var(--accent);
+    color: var(--ground);
   }
 
   .form-input {
     width: 100%;
     padding: 0.85rem 1rem;
-    border-radius: 0;
+    border-radius: 0.625rem;
     background-color: transparent;
-    border: 1px solid var(--rule);
+    border: 1px solid var(--rule-strong);
     color: var(--ink);
     font-family: var(--font-sans);
     font-size: 0.875rem;
@@ -302,49 +307,65 @@
   .form-input:focus {
     border-color: var(--accent);
   }
-}
 
-@layer components {
-  /* Placeholder fill for work with no imagery yet, as the reference does */
+  /* Placeholder fill for work with no imagery yet. */
   .hatch {
     background-image: repeating-linear-gradient(
       45deg,
-      var(--rule) 0,
-      var(--rule) 1px,
+      var(--rule-strong) 0,
+      var(--rule-strong) 1px,
       transparent 1px,
       transparent 9px
     );
   }
 }
 
-/* Full-bleed colour field. Redefines the role vars, so contents re-colour themselves. */
-.block-invert {
-  --ground: var(--maroon);
-  --surface: #4a1212;
-  --ink: var(--cloud);
-  --ink-display: var(--cloud);
-  --display-em: var(--mauve);
-  --ink-muted: color-mix(in srgb, var(--cloud) 68%, transparent);
-  --accent: var(--mauve);
-  --accent-soft: color-mix(in srgb, var(--mauve) 35%, transparent);
-  --rule: color-mix(in srgb, var(--cloud) 22%, transparent);
-  --rule-strong: color-mix(in srgb, var(--cloud) 40%, transparent);
-  background-color: var(--ground);
-  color: var(--ink);
+/* Seam: the band of grid cells where one field dissolves into the next. */
+/* 16 cells per container width (4 per column), tripled to bleed past both edges. */
+.seam-cells {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
 }
 
-/* Maroon on the dark ground is 1.1:1, so dark mode inverts to a warm Mauve panel. */
-.dark .block-invert {
-  --ground: var(--mauve);
-  --surface: #d3aaa9;
-  --ink: var(--maroon);
-  --ink-display: var(--maroon);
-  --display-em: var(--blue);
-  --ink-muted: color-mix(in srgb, var(--maroon) 72%, transparent);
-  --accent: var(--maroon);
-  --accent-soft: color-mix(in srgb, var(--maroon) 30%, transparent);
-  --rule: color-mix(in srgb, var(--maroon) 25%, transparent);
-  --rule-strong: color-mix(in srgb, var(--maroon) 45%, transparent);
+.seam-cell {
+  aspect-ratio: 1;
+  transition:
+    background-color 0.35s ease,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.seam-cell.on {
+  background-color: var(--opposite);
+}
+
+.seam.armed .seam-cell.on {
+  transform: scale(0);
+}
+
+.seam.armed.in .seam-cell.on {
+  transform: none;
+  transition-delay: 0s, var(--d);
+}
+
+/* Cells the cursor leaves behind, in the opposite colour of their field. */
+.trail-cell {
+  position: absolute;
+  background-color: var(--opposite);
+  pointer-events: none;
+  animation: trail-fade 1.2s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+@keyframes trail-fade {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /* Staged reveal in CSS so content is never gated behind JS. */
@@ -361,17 +382,4 @@
 
 .rise {
   animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* Fixed overlays sit outside .block-invert, so they re-point their own tokens. */
-.on-block {
-  --ink-muted: color-mix(in srgb, var(--cloud) 72%, transparent);
-  --accent: var(--cloud);
-  --rule-strong: color-mix(in srgb, var(--cloud) 45%, transparent);
-}
-
-.dark .on-block {
-  --ink-muted: color-mix(in srgb, var(--maroon) 75%, transparent);
-  --accent: var(--maroon);
-  --rule-strong: color-mix(in srgb, var(--maroon) 55%, transparent);
 }

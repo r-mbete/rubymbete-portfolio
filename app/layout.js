@@ -1,16 +1,24 @@
-import { ThemeProvider } from "next-themes";
 import MotionProvider from "@/components/ui/MotionProvider";
-import { Bodoni_Moda, Inter } from "next/font/google";
+import { Newsreader, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
-// Display: a true Didone, matching the reference and the palette board.
-const bodoni = Bodoni_Moda({
+// Display: a soft book serif, as on the palette card.
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-bodoni",
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
   display: "swap",
 });
 
-// Labels, UI and body copy.
+// Labels, ordinals and chips: the card's mono caps.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
+// Body copy and UI.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -30,7 +38,7 @@ export const metadata = {
     "React",
   ],
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%233B0A0A'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='15' fill='%23E3EBF2'>RM</text></svg>",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%234F0C28'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='15' fill='%23C5D2F8'>RM</text></svg>",
   },
 };
 
@@ -38,17 +46,10 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      suppressHydrationWarning
-      className={`${bodoni.variable} ${inter.variable}`}
+      className={`${newsreader.variable} ${plexMono.variable} ${inter.variable}`}
     >
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-        >
-          <MotionProvider>{children}</MotionProvider>
-        </ThemeProvider>
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

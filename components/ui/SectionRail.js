@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
+import useToneAt from "./useToneAt";
 
-// Sections painted with .block-invert, where the rail must flip colours.
-const blockSections = new Set(["experience"]);
+const viewportCentre = () => window.innerHeight / 2;
 
 const sections = [
   { id: "home", ordinal: "01", name: "Intro" },
@@ -14,6 +14,7 @@ const sections = [
 
 export default function SectionRail() {
   const [active, setActive] = useState("home");
+  const tone = useToneAt(viewportCentre);
 
   useEffect(() => {
     // Collapse the root to a zero-height band at the viewport centre, which is
@@ -39,9 +40,7 @@ export default function SectionRail() {
   return (
     <nav
       aria-label="Page sections"
-      className={`fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block ${
-        blockSections.has(active) ? "on-block" : ""
-      }`}
+      className={`tone-${tone} fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block`}
     >
       <ul className="flex flex-col items-end gap-5">
         {sections.map((section) => {

@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, X, ExternalLink, MessageCircle, Mail } from "lucide-react";
+import { Send, X, ArrowUpRight, MessageCircle, Mail } from "lucide-react";
+import Field from "@/components/ui/Field";
+import SectionHead from "@/components/ui/SectionHead";
 
 function ContactDialog({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ function ContactDialog({ isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-ground/70 backdrop-blur-sm"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
@@ -61,16 +63,21 @@ function ContactDialog({ isOpen, onClose }) {
             transition={{ type: "spring", duration: 0.4 }}
             className="fixed inset-0 z-50 flex items-center justify-center px-4"
           >
-            <div className="card w-full max-w-lg relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="contact-dialog-title"
+              className="tone-peri card w-full max-w-lg relative overflow-hidden bg-ground text-ink"
+            >
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 rounded-full bg-surface/50 hover:bg-surface text-ink-muted transition-all duration-300"
+                aria-label="Close"
+                className="absolute top-4 right-4 p-2 rounded-full text-ink-muted transition-colors duration-300 hover:text-accent"
               >
                 <X className="w-4 h-4" />
               </button>
               <div className="mb-6">
-                <h3 className="text-2xl font-bold text-ink mb-1">
+                <h3 id="contact-dialog-title" className="display text-3xl mb-2">
                   Send me a message
                 </h3>
                 <p className="text-sm text-ink-muted">
@@ -79,7 +86,7 @@ function ContactDialog({ isOpen, onClose }) {
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-ink mb-1.5">
+                  <label className="label block text-ink-muted mb-2">
                     Your Name
                   </label>
                   <input
@@ -93,7 +100,7 @@ function ContactDialog({ isOpen, onClose }) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-ink mb-1.5">
+                  <label className="label block text-ink-muted mb-2">
                     Your Email
                   </label>
                   <input
@@ -107,7 +114,7 @@ function ContactDialog({ isOpen, onClose }) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-ink mb-1.5">
+                  <label className="label block text-ink-muted mb-2">
                     Message
                   </label>
                   <textarea
@@ -120,7 +127,7 @@ function ContactDialog({ isOpen, onClose }) {
                     className="form-input resize-none"
                   />
                 </div>
-                {error && <p className="text-red-500 text-sm">{error}</p>}
+                {error && <p className="text-sm font-medium text-accent">{error}</p>}
                 <motion.button
                   type="submit"
                   disabled={status === "sending" || status === "sent"}
@@ -136,14 +143,14 @@ function ContactDialog({ isOpen, onClose }) {
                   )}
                   {status === "sending" && (
                     <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-current/30 border-t-current rounded-full animate-spin" />
                       Sending...
                     </>
                   )}
                   {status === "sent" && (
                     <>
                       <Mail className="w-4 h-4" />
-                      Message Sent! 🎉
+                      Message sent
                     </>
                   )}
                 </motion.button>
@@ -160,75 +167,53 @@ export default function Contact() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
-    <section id="contact" className="relative overflow-hidden">
-      {/* Floating patches */}
+    <Field id="contact" tone="plum" innerClassName="section-container">
+      <SectionHead ordinal="05" label="Get In Touch" />
 
-      <div className="section-container relative z-10">
-        <div className="max-w-2xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-12"
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-8 h-0.5 bg-accent" />
-              <p className="section-subtitle mb-0">Get In Touch</p>
-              <div className="w-8 h-0.5 bg-accent" />
-            </div>
-            <h2 className="display display-2 mb-4">
-              I&apos;d love to
-              <span className="display-em">
-                {" "}
-                hear from you!
-              </span>
-            </h2>
-            <motion.button
-              onClick={() => setIsDialogOpen(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-primary mx-auto"
-            >
-              <MessageCircle className="w-5 h-5" />
-              Send me a message
-            </motion.button>
-          </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="grid gap-12 md:grid-cols-4 md:gap-0"
+      >
+        <h2 className="display display-2 md:col-span-3 md:pr-12">
+          I&apos;d love to <span className="display-em">hear from you.</span>
+        </h2>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8"
+        <div className="flex flex-col justify-end gap-3">
+          <button
+            onClick={() => setIsDialogOpen(true)}
+            className="btn-primary justify-center"
           >
-            <a
-              href="https://github.com/r-mbete"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group label inline-flex items-center gap-2.5 border border-rule px-4 py-3 text-ink-muted transition-colors duration-300 hover:border-accent hover:text-accent"
-            >
-              <ExternalLink className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
-              github.com/r-mbete
-            </a>
-            <span className="hidden h-px w-6 bg-rule-strong sm:block" />
-            <a
-              href="https://www.linkedin.com/in/ruby-mbete-278072270/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group label inline-flex items-center gap-2.5 border border-rule px-4 py-3 text-ink-muted transition-colors duration-300 hover:border-accent hover:text-accent"
-            >
-              <ExternalLink className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
-              LinkedIn
-            </a>
-          </motion.div>
+            <MessageCircle className="w-4 h-4" />
+            Send me a message
+          </button>
+          <a
+            href="https://github.com/r-mbete"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline justify-between"
+          >
+            GitHub
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/ruby-mbete-278072270/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline justify-between"
+          >
+            LinkedIn
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
         </div>
-      </div>
+      </motion.div>
 
       <ContactDialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
       />
-    </section>
+    </Field>
   );
 }

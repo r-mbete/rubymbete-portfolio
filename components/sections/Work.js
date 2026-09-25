@@ -1,5 +1,7 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
+import Field from "@/components/ui/Field";
+import SectionHead from "@/components/ui/SectionHead";
 
 const projects = [
   {
@@ -35,59 +37,63 @@ export default function Work() {
       };
 
   return (
-    <section id="work" className="relative overflow-hidden py-28 sm:py-36">
+    <Field
+      id="work"
+      tone="peri"
+      innerClassName="mx-auto w-full max-w-6xl px-6 py-24 sm:py-32"
+    >
+      <SectionHead ordinal="02" label="Selected Work" />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
-        <motion.div {...reveal} className="mb-20 flex items-center gap-5">
-          <span className="ordinal text-accent">02</span>
-          <span className="label text-ink-muted">Selected Work</span>
-          <span className="h-px flex-1 bg-rule" />
-        </motion.div>
-
-        <div className="flex flex-col gap-24 sm:gap-32">
-          {projects.map((project) => (
-            <motion.article
-              key={project.title}
-              {...reveal}
-              className="group grid gap-10 md:grid-cols-12 md:gap-12"
+      <div className="flex flex-col gap-24 sm:gap-32">
+        {projects.map((project, i) => (
+          <motion.article
+            key={project.title}
+            {...reveal}
+            className="group grid gap-10 md:grid-cols-4 md:gap-0"
+          >
+            {/* Plates alternate sides, so the two projects read as a spread. */}
+            <div
+              className={`md:col-span-2 ${i % 2 ? "md:order-2" : ""}`}
             >
-              <div className="md:col-span-7">
-                <div className="hatch rule-t rule-b rule-l rule-r aspect-[4/3] w-full transition-colors duration-500 group-hover:border-accent" />
-              </div>
-
-              <div className="flex flex-col justify-center md:col-span-5">
-                <div className="mb-5 flex items-center gap-4">
-                  <span className="ordinal text-ink-muted">
-                    {project.ordinal}
-                  </span>
-                  <span className="label text-ink-muted">
-                    {project.platform}
-                  </span>
-                  <span className="label rule-t rule-b rule-l rule-r px-2 py-1 text-accent">
-                    {project.status}
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[0.75rem] border border-rule-strong hatch">
+                <div className="absolute inset-0 flex items-end bg-opposite p-6 transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0)]">
+                  <span className="display display-em text-4xl text-ground sm:text-5xl">
+                    {project.title}
                   </span>
                 </div>
-
-                <h3 className="display display-3 mb-5 transition-colors duration-500 group-hover:text-accent">
-                  {project.title}
-                </h3>
-
-                <p className="mb-7 text-[0.9375rem] leading-relaxed text-ink-muted">
-                  {project.description}
-                </p>
-
-                <ul className="flex flex-wrap gap-2">
-                  {project.stack.map((tech) => (
-                    <li key={tech} className="skill-badge transition-colors duration-300 group-hover:border-rule-strong">
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
               </div>
-            </motion.article>
-          ))}
-        </div>
+            </div>
+
+            <div
+              className={`flex flex-col justify-center md:col-span-2 ${
+                i % 2 ? "md:pr-12" : "md:pl-12"
+              }`}
+            >
+              <div className="mb-5 flex items-center gap-4">
+                <span className="ordinal text-ink-muted">
+                  {project.ordinal}
+                </span>
+                <span className="label text-ink-muted">{project.platform}</span>
+                <span className="chip">{project.status}</span>
+              </div>
+
+              <h3 className="display display-3 mb-5">{project.title}</h3>
+
+              <p className="mb-7 text-[0.9375rem] leading-relaxed text-ink-muted">
+                {project.description}
+              </p>
+
+              <ul className="flex flex-wrap gap-2">
+                {project.stack.map((tech) => (
+                  <li key={tech} className="chip">
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.article>
+        ))}
       </div>
-    </section>
+    </Field>
   );
 }

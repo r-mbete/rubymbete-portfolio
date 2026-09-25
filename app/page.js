@@ -1,7 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
-import EditorialGrid from "@/components/ui/EditorialGrid";
 import SectionRail from "@/components/ui/SectionRail";
-import ScrollProgress from "@/components/ui/ScrollProgress";
+import Seam from "@/components/ui/Seam";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import Work from "@/components/sections/Work";
@@ -9,21 +8,21 @@ import Experience from "@/components/sections/Experience";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
 
+// Fields alternate plum and periwinkle; each Seam dissolves one into the next.
 export default function Home() {
   return (
     <main className="relative min-h-screen">
-      <EditorialGrid fixed />
-      <ScrollProgress />
+      <Navbar />
       <SectionRail />
-      <div className="relative z-10">
-        <Navbar />
-        <Hero />
-        <Work />
-        <Experience />
-        <Skills />
-        <Contact />
-        <Footer />
-      </div>
+      <Hero />
+      <Work />
+      <Seam from="peri" seed={11} />
+      <Experience />
+      <Seam from="plum" seed={23} />
+      <Skills />
+      <Seam from="peri" seed={42} />
+      <Contact />
+      <Footer />
     </main>
   );
 }

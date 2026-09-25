@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import ThemeToggle from "../ui/ThemeToggle";
+import ScrollProgress from "../ui/ScrollProgress";
+import useToneAt from "../ui/useToneAt";
 
 const navLinks = [
   { name: "Work", href: "#work" },
@@ -10,128 +11,74 @@ const navLinks = [
   { name: "Contact", href: "#contact" },
 ];
 
+// Sample just below the bar, so it takes the colour of whatever it is about to cover.
+const belowBar = () => 72;
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const tone = useToneAt(belowBar);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLinkClick = () => {
-    setIsOpen(false);
-  };
-
   return (
     <nav
-      className={`
-      fixed top-0 left-0 right-0 z-50
-      transition-all duration-300
-      ${
-        scrolled
+      className={`tone-${tone} fixed top-0 left-0 right-0 z-50 text-ink transition-colors duration-500 ${
+        scrolled || isOpen
           ? "bg-ground/85 backdrop-blur-md border-b border-rule"
           : "bg-transparent"
-      }
-    `}
+      }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ScrollProgress />
+      <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
           <a
             href="#"
-            className="
-              display text-xl
-              text-accent
-              hover:opacity-80
-              transition-opacity duration-300
-            "
+            className="display text-2xl text-accent transition-opacity duration-300 hover:opacity-80"
           >
             Ruby Mbete
           </a>
 
-          {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="
-                  label
-                  text-ink-muted
-                  hover:text-accent
-                  transition-colors duration-300
-                  relative group
-                "
+                className="label link-sweep text-ink-muted transition-colors duration-300 hover:text-accent"
               >
                 {link.name}
-                {/* Underline animation */}
-                <span
-                  className="
-                  absolute -bottom-1 left-0 w-0 h-px
-                  bg-accent
-                  group-hover:w-full
-                  transition-all duration-300
-                "
-                />
               </a>
             ))}
           </div>
 
-          {/* Right side — Theme Toggle + Mobile Menu */}
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="
-                md:hidden p-2 rounded-full
-                bg-surface
-                border border-rule
-                hover:bg-surface
-                transition-all duration-300
-              "
-              aria-label="Toggle menu"
-            >
-              {isOpen ? (
-                <X className="w-5 h-5 text-accent" />
-              ) : (
-                <Menu className="w-5 h-5 text-accent" />
-              )}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden rounded-[0.625rem] border border-rule-strong p-2 text-accent"
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
-        className={`
-        md:hidden
-        transition-all duration-300 overflow-hidden
-        ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
-        bg-white/95
-        backdrop-blur-md
-        border-b border-rule
-      `}
+        className={`md:hidden overflow-hidden transition-all duration-300 ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
-        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <div className="max-w-6xl mx-auto px-6 pb-4 flex flex-col">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              onClick={handleLinkClick}
-              className="
-                text-ink
-                hover:text-accent
-                hover:bg-surface
-                font-medium text-sm
-                px-4 py-3 rounded-xl
-                transition-all duration-300
-              "
+              onClick={() => setIsOpen(false)}
+              className="label rule-t py-4 text-ink transition-colors duration-300 hover:text-accent"
             >
               {link.name}
             </a>

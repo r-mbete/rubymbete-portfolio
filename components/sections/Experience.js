@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import EditorialGrid from "@/components/ui/EditorialGrid";
+import Field from "@/components/ui/Field";
+import SectionHead from "@/components/ui/SectionHead";
 
 const experiences = [
   {
@@ -54,135 +55,83 @@ const education = [
   },
 ];
 
+const reveal = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+};
+
 export default function Experience() {
   return (
-    <section id="experience" className="block-invert relative overflow-hidden">
-      <EditorialGrid />
-      {/* Floating patches */}
+    <Field id="experience" tone="plum" innerClassName="section-container">
+      <SectionHead
+        ordinal="03"
+        label="Experience"
+        title="Experiences that"
+        em="shaped me."
+      />
 
-      <div className="section-container relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-16"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-accent" />
-            <p className="section-subtitle mb-0">Work Experience</p>
-          </div>
-          <h2 className="display display-2">
-            Experiences that
-            <span className="display-em">
-              {" "}
-              shaped me.
-            </span>
-          </h2>
-        </motion.div>
+      <div className="rule-t mb-24">
+        {experiences.map((exp) => (
+          <motion.article
+            key={exp.company}
+            {...reveal}
+            className="rule-b grid gap-6 py-12 md:grid-cols-4 md:gap-0"
+          >
+            <div className="flex items-start gap-3 md:flex-col md:pr-8">
+              <p className="ordinal pt-1 text-ink-muted">{exp.period}</p>
+              {exp.current && <span className="chip">Now</span>}
+            </div>
 
-        {/* Experience Cards */}
-        <div className="flex flex-col gap-6 mb-20">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="card group relative overflow-hidden"
-            >
-              {exp.current && (
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
-              )}
-
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <h3 className="text-lg font-bold text-ink group-hover:text-accent transition-colors duration-300">
-                      {exp.company}
-                    </h3>
-                  </div>
-                  <p className="text-sm font-semibold text-accent">
-                    {exp.role}
-                  </p>
-                </div>
-                <span className="text-xs font-medium flex-shrink-0 w-fit px-3 py-1.5 rounded-full bg-surface/60 text-ink-muted border border-rule/60">
-                  {exp.period}
-                </span>
-              </div>
-
-              <p className="text-sm text-ink-muted leading-relaxed mb-4">
+            <div className="md:col-span-3">
+              <h3 className="display display-3">{exp.company}</h3>
+              <p className="label mt-3 text-ink-muted">{exp.role}</p>
+              <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed">
                 {exp.description}
               </p>
 
-              <ul className="space-y-2 mb-4">
-                {exp.bullets.map((bullet, i) => (
+              <ul className="mt-6 max-w-2xl space-y-3">
+                {exp.bullets.map((bullet) => (
                   <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-ink-muted"
+                    key={bullet}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-ink-muted"
                   >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-accent/40" />
+                    {/* A single grid cell as the bullet. */}
+                    <span className="mt-1.5 h-2 w-2 flex-shrink-0 bg-accent" />
                     {bullet}
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-wrap gap-2 pt-3 border-t border-rule/40">
-                {exp.tech.map((t, i) => (
-                  <span
-                    key={i}
-                    className="text-xs font-medium px-3 py-1 rounded-full bg-surface/60 text-ink-muted border border-rule/60"
-                  >
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {exp.tech.map((t) => (
+                  <li key={t} className="chip">
                     {t}
-                  </span>
+                  </li>
                 ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Education */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-0.5 bg-accent" />
-            <p className="section-subtitle mb-0">Where I Learned</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {education.map((edu, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card group relative overflow-hidden"
-              >
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-                <span className="text-xs font-medium px-3 py-1 rounded-full inline-block mb-3 bg-surface/50 text-ink-muted border border-rule">
-                  {edu.period}
-                </span>
-                <h3 className="text-lg font-bold text-ink mb-1 group-hover:text-accent transition-colors duration-300">
-                  {edu.school}
-                </h3>
-                <p className="text-sm font-semibold text-accent mb-2">
-                  {edu.degree}
-                </p>
-                <p className="text-sm text-ink-muted">
-                  {edu.detail}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+              </ul>
+            </div>
+          </motion.article>
+        ))}
       </div>
-    </section>
+
+      <SectionHead ordinal="03.1" label="Where I Learned" />
+
+      <div className="grid gap-4 md:grid-cols-2 md:gap-0">
+        {education.map((edu, index) => (
+          <motion.div
+            key={edu.school}
+            {...reveal}
+            className={`card ${index === 0 ? "md:mr-6" : "md:ml-6"}`}
+          >
+            <span className="chip mb-6">{edu.period}</span>
+            <h3 className="display text-3xl">{edu.school}</h3>
+            <p className="label mt-3 text-accent">{edu.degree}</p>
+            <p className="mt-4 text-sm text-ink-muted">{edu.detail}</p>
+          </motion.div>
+        ))}
+      </div>
+    </Field>
   );
 }
