@@ -39,9 +39,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           <a
             href="#"
+            aria-label="Ruby Mbete, back to top"
             className="display text-2xl text-accent transition-opacity duration-300 hover:opacity-80"
           >
-            Ruby Mbete
+            RM
           </a>
 
           <div className="hidden md:flex items-center gap-8">

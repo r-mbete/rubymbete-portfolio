@@ -14,42 +14,21 @@ const methali = [
   { sw: "Mchagua jembe si mkulima.", en: "The one who fusses over the hoe is no farmer." },
 ];
 
-let visit;
+let pick;
 
-// Counts a visit once per browser session, so reloading doesn't skip ahead.
-function readVisit() {
-  if (visit === undefined) {
-    try {
-      let n = Number(localStorage.getItem("rm-visits")) || 0;
-      if (!sessionStorage.getItem("rm-counted")) {
-        n += 1;
-        localStorage.setItem("rm-visits", String(n));
-        sessionStorage.setItem("rm-counted", "1");
-      }
-      visit = Math.max(n, 1);
-    } catch {
-      visit = 1;
-    }
-  }
-  return visit;
-}
-
+// Chosen once per page load; the server renders nothing so hydration never mismatches.
+const readPick = () => (pick ??= Math.floor(Math.random() * methali.length));
 const noSubscribe = () => () => {};
-const pad = (n) => String(n).padStart(2, "0");
 
-// A different Swahili proverb on every visit: a small reason to come back.
+// A random Swahili proverb on each load.
 export default function Methali() {
-  const n = useSyncExternalStore(noSubscribe, readVisit, () => 0);
-  const index = (Math.max(n, 1) - 1) % methali.length;
-  const { sw, en } = methali[index];
+  const index = useSyncExternalStore(noSubscribe, readPick, () => -1);
+  const { sw, en } = methali[Math.max(index, 0)];
 
   return (
     <figure
-      className={`text-center transition-opacity duration-700 ${n ? "opacity-100" : "opacity-0"}`}
+      className={`text-center transition-opacity duration-700 ${index < 0 ? "opacity-0" : "opacity-100"}`}
     >
-      <figcaption className="label mb-8 text-ink-muted">
-        {n > 1 ? `Karibu tena · Visit ${pad(n)}` : "Karibu · First visit"}
-      </figcaption>
       <blockquote
         lang="sw"
         className="display mx-auto max-w-4xl text-[clamp(2.25rem,6vw,4.5rem)]"
@@ -59,12 +38,6 @@ export default function Methali() {
       <p className="display display-em mx-auto mt-6 max-w-xl text-xl sm:text-2xl">
         {en}
       </p>
-      <div className="mt-10 flex flex-wrap justify-center gap-3 sm:gap-8">
-        <span className="chip chip-lg">
-          Methali {pad(index + 1)} / {methali.length}
-        </span>
-        <span className="chip chip-lg">A new one every visit</span>
-      </div>
     </figure>
   );
 }
