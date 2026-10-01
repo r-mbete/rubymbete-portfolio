@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import Field from "@/components/ui/Field";
 import SectionHead from "@/components/ui/SectionHead";
@@ -9,7 +10,9 @@ const projects = [
     title: "Kanga Archive",
     platform: "Web",
     status: "In progress",
-    stack: ["Next.js", "TypeScript", "PostgreSQL"],
+    stack: ["Next.js", "TypeScript", "PostgreSQL", "Drizzle"],
+    cover: "/work/kanga-archive.webp",
+    alt: "The saying Haba na haba hujaza kibaba on a cloth-like band between two rows of spots, above Reveal what it says and Try another buttons, on sand with a few guineafowl spots",
     description:
       "Kanga cloth carries a printed Swahili proverb — the pattern and the message are one object. An interactive archive of the designs, their sayings, and what they mean.",
   },
@@ -18,7 +21,9 @@ const projects = [
     title: "Around Nairobi",
     platform: "Mobile",
     status: "In progress",
-    stack: ["React Native", "Expo", "Maps API"],
+    stack: ["React Native", "Expo", "SQLite"],
+    cover: "/work/around-nairobi.webp",
+    alt: "The Around Nairobi This week screen on a phone, listing Open Mic Poetry and Friday Jazz Night",
     description:
       "What is happening in the city this week, built offline-first so it still works on a patchy connection or a dead data bundle.",
   },
@@ -55,8 +60,18 @@ export default function Work() {
             <div
               className={`md:col-span-2 ${i % 2 ? "md:order-2" : ""}`}
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[0.75rem] border border-rule-strong hatch">
-                <div className="absolute inset-0 flex items-end bg-opposite p-6 transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0)]">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[0.75rem] border border-rule-strong">
+                <Image
+                  src={project.cover}
+                  alt={project.alt}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 flex items-end bg-opposite p-6 transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0)]"
+                >
                   <span className="display display-em text-4xl text-ground sm:text-5xl">
                     {project.title}
                   </span>
