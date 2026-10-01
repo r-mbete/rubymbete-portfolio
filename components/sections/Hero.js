@@ -27,12 +27,17 @@ export default function Hero() {
           >
             Ruby Mbete
           </h1>
+          {/* Roles pinned to the outer grid lines, on a hairline under the name. */}
           <div
-            className="rise mt-10 flex flex-wrap justify-center gap-3 sm:gap-10"
+            className="rise mt-10 flex w-full items-baseline justify-between gap-4 border-t border-rule-strong pt-4 sm:mt-14"
             style={{ animationDelay: "0.4s" }}
           >
-            <span className="chip chip-lg">Software Engineer</span>
-            <span className="chip chip-lg">UI · UX Designer</span>
+            <span className="display text-left text-lg sm:text-2xl">
+              Software Engineer
+            </span>
+            <span className="display text-right text-lg sm:text-2xl">
+              UI · UX Designer
+            </span>
           </div>
           <p
             className="rise mt-10 max-w-sm text-[0.9375rem] leading-relaxed text-ink-muted"

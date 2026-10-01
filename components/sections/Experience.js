@@ -51,7 +51,7 @@ const education = [
     school: "Moringa School",
     degree: "UI/UX Design",
     detail: "User-centered design, Figma prototyping, wireframing",
-    period: "2024",
+    period: "2025",
   },
 ];
 
