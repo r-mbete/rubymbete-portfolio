@@ -19,7 +19,6 @@ The site is built from two colours only: **Dark Plum `#4F0C28`** and **Periwinkl
 - **Grid** — a 16-cell grid (`components/ui/grid.js`) is shared by the vertical rules, the seams and the cursor trail, so they all line up.
 - **Seams** — `Seam` draws a band of grid cells where one field dissolves into the next. The pattern is seeded so server and client render the same thing, and the cells grow in as the band scrolls into view.
 - **Cursor trail** — `CellTrail` lights the grid cell under the cursor in the field's opposite colour, then fades and removes it. It is off for touch input and for `prefers-reduced-motion`.
-- **Methali** — the hero shows a random Swahili proverb with its English translation on each load.
 - **Floating UI** — the navbar and section rail use `useToneAt` to detect the field beneath them and switch tone to match.
 
 ## Project Structure
@@ -33,7 +32,7 @@ app/
 components/
   layout/            Navbar, Footer
   sections/          Hero, Work, Experience, Skills, Contact
-  ui/                Field, Seam, CellTrail, Methali, SectionRail, …
+  ui/                Field, Seam, CellTrail, SectionRail, …
 ```
 
 ## Getting Started

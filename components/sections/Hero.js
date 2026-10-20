@@ -1,9 +1,8 @@
 import Field from "@/components/ui/Field";
 import Seam from "@/components/ui/Seam";
-import Methali from "@/components/ui/Methali";
 import SaveForLater from "@/components/ui/SaveForLater";
 
-// Composed like the palette card: plum over periwinkle, a name and two chips on each.
+// Composed like the palette card: the name on plum, dissolving into a periwinkle strip of actions.
 export default function Hero() {
   return (
     <section id="home">
@@ -54,10 +53,9 @@ export default function Hero() {
       <Field
         as="div"
         tone="peri"
-        innerClassName="mx-auto w-full max-w-6xl px-6 pt-10 pb-20 sm:pt-16 sm:pb-24"
+        innerClassName="mx-auto w-full max-w-6xl px-6 py-12 sm:py-16"
       >
-        <Methali />
-        <div className="mt-20 flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
             <a href="#work" className="btn-primary justify-center">
               View the work
